@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, SafeAreaView, PanResponder, Animated, Dimensions } from 'react-native';
 import Svg, { Path, Circle } from 'react-native-svg';
+
+const { width } = Dimensions.get('window');
 
 const BackArrow = () => (
   <Svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -38,10 +40,42 @@ const categoryData = {
 
 const CategoryDetailsScreen = ({ category, onBack }) => {
   const stores = categoryData[category] || [];
+  const panX = useState(new Animated.Value(0))[0];
+
+  const panResponder = useState(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => false,
+      onMoveShouldSetPanResponder: (_, gestureState) => {
+        // Detect horizontal swipe from left to right
+        return Math.abs(gestureState.dx) > 20 && gestureState.dx > Math.abs(gestureState.dy);
+      },
+      onPanResponderMove: Animated.event([null, { dx: panX }], { useNativeDriver: false }),
+      onPanResponderRelease: (_, gestureState) => {
+        if (gestureState.dx > width * 0.3) {
+          // Swipe far enough to go back
+          Animated.timing(panX, {
+            toValue: width,
+            duration: 200,
+            useNativeDriver: false,
+          }).start(() => onBack());
+        } else {
+          // Snap back
+          Animated.spring(panX, {
+            toValue: 0,
+            useNativeDriver: false,
+          }).start();
+        }
+      },
+    })
+  )[0];
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
+      <Animated.View 
+        style={[styles.container, { transform: [{ translateX: panX }] }]} 
+        {...panResponder.panHandlers}
+      >
+        {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={onBack} style={styles.backButton}>
           <BackArrow />
@@ -97,8 +131,8 @@ const CategoryDetailsScreen = ({ category, onBack }) => {
             </View>
           </View>
         ))}
-
-      </ScrollView>
+        </ScrollView>
+      </Animated.View>
     </SafeAreaView>
   );
 };
@@ -152,7 +186,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 8,
   },
   storeInfo: {
-    padding: 16,
+    padding: 18,
   },
   storeHeader: {
     flexDirection: 'row',

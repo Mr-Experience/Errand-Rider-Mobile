@@ -12,16 +12,16 @@ const { width } = Dimensions.get('window');
 
 const ClocheIcon = ({ color }) => (
   <Svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-    <Path d="M12 5C7.58 5 4 8.58 4 13H20C20 8.58 16.42 5 12 5Z" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <Path d="M12 3V5" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <Path d="M2 14H22" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <Path d="M12 5C7.58 5 4 8.58 4 13H20C20 8.58 16.42 5 12 5Z" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <Path d="M12 3V5" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <Path d="M2 14H22" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
   </Svg>
 );
 
 const ShopIcon = ({ color }) => (
   <Svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-    <Path d="M3 9L4.5 4H19.5L21 9M3 9V20H21V9M3 9H21M9 20V14H15V20" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <Path d="M1 9H23" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <Path d="M3 9L4.5 4H19.5L21 9M3 9V20H21V9M3 9H21M9 20V14H15V20" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <Path d="M1 9H23" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
   </Svg>
 );
 
@@ -634,7 +634,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 8,
   },
   storeInfo: {
-    padding: 16,
+    padding: 18,
   },
   storeHeader: {
     flexDirection: 'row',
