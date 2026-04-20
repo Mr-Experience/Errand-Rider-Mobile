@@ -90,7 +90,7 @@ const CategoryDetailsScreen = ({ category, onBack }) => {
           <View key={index} style={styles.cardShadowClip}>
             <View style={styles.storeCard}>
               <Image
-                source={require('../../ui_element/Food card.jpg')}
+                source={require('../../ui_element/food_card.jpg')}
                 style={styles.storeImage}
                 resizeMode="cover"
               />
@@ -107,10 +107,11 @@ const CategoryDetailsScreen = ({ category, onBack }) => {
                     </View>
                   )}
                 </View>
-
                 <View style={styles.storeMeta}>
                   <View style={styles.metaItem}>
-                    <PinIcon />
+                    <View style={{ marginRight: 4 }}>
+                      <PinIcon />
+                    </View>
                     <Text style={styles.metaText}>{store.location}</Text>
                   </View>
                   <View style={[styles.metaItem, { marginLeft: 16 }]}>
@@ -217,7 +218,6 @@ const styles = StyleSheet.create({
   metaItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
   },
   metaText: {
     fontSize: 14,
