@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, SafeAreaView, Image } from 'react-native';
-import Svg, { Path, Defs, Pattern, Rect } from 'react-native-svg';
+import Svg, { Path, Defs, Pattern, Rect, G } from 'react-native-svg';
 
 const FilterIcon = () => (
   <Svg width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -23,19 +23,19 @@ const PatternOverlay = () => (
     <Svg width="100%" height="24">
       <Defs>
         <Pattern
-          id="net"
+          id="bike"
           patternUnits="userSpaceOnUse"
-          width="10"
-          height="10"
+          width="40"
+          height="24"
         >
-          <Path
-            d="M0 0L10 10M10 0L0 10"
-            stroke="rgba(255,255,255,0.15)"
-            strokeWidth="0.5"
-          />
+          <G opacity="0.4">
+            <Path d="M4 16C5.65685 16 7 14.6569 7 13C7 11.3431 5.65685 10 4 10C2.34315 10 1 11.3431 1 13C1 14.6569 2.34315 16 4 16Z" stroke="white" strokeWidth="1"/>
+            <Path d="M16 16C17.6569 16 19 14.6569 19 13C19 11.3431 17.6569 10 16 10C14.3431 10 13 11.3431 13 13C13 14.6569 14.3431 16 16 16Z" stroke="white" strokeWidth="1"/>
+            <Path d="M7 13H13M10 13V8H14" stroke="white" strokeWidth="1"/>
+          </G>
         </Pattern>
       </Defs>
-      <Rect width="100%" height="24" fill="url(#net)" />
+      <Rect width="100%" height="24" fill="url(#bike)" />
     </Svg>
   </View>
 );
