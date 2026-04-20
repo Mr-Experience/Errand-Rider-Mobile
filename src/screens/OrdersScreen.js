@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, SafeAreaView, Image } from 'react-native';
-import Svg, { Path } from 'react-native-svg';
+import Svg, { Path, Defs, Pattern, Rect } from 'react-native-svg';
 
 const FilterIcon = () => (
   <Svg width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -13,13 +13,38 @@ const getStatusColor = (status) => {
     case 'Delivered': return '#038537';
     case 'On its way': return '#2196F3';
     case 'Pending': return '#FFC107';
+    case 'Cancelled': return '#E53935';
     default: return '#888';
   }
 };
 
+const PatternOverlay = () => (
+  <View style={StyleSheet.absoluteFill}>
+    <Svg width="100%" height="24">
+      <Defs>
+        <Pattern
+          id="net"
+          patternUnits="userSpaceOnUse"
+          width="10"
+          height="10"
+        >
+          <Path
+            d="M0 0L10 10M10 0L0 10"
+            stroke="rgba(255,255,255,0.15)"
+            strokeWidth="0.5"
+          />
+        </Pattern>
+      </Defs>
+      <Rect width="100%" height="24" fill="url(#net)" />
+    </Svg>
+  </View>
+);
+
 const OrderCard = ({ status, date, transactionId, cost }) => (
   <View style={styles.card}>
-    <Image source={require('../../ui_element/food_card.jpg')} style={styles.cardHeaderImage} />
+    <View style={[styles.cardHeaderBar, { backgroundColor: getStatusColor(status) }]}>
+      <PatternOverlay />
+    </View>
     <View style={styles.cardContent}>
       <View style={styles.infoRow}>
         <Text style={styles.label}>Order Status</Text>
@@ -46,6 +71,7 @@ const OrdersScreen = () => {
     { status: 'On its way', date: '10 Sept 2026', transactionId: '26vGDSHSS', cost: 10000 },
     { status: 'Delivered', date: '08 Sept 2026', transactionId: '27xYHJKLL', cost: 3500 },
     { status: 'Pending', date: '07 Sept 2026', transactionId: '28pZZXCVB', cost: 12500 },
+    { status: 'Cancelled', date: '05 Sept 2026', transactionId: '29QWERTYU', cost: 2000 },
   ];
 
   return (
@@ -92,12 +118,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderRadius: 12,
-    gap: 8,
   },
   filterText: {
     fontFamily: 'Geist_400Regular',
     fontSize: 16,
     color: '#ffffff',
+    marginLeft: 8,
   },
   scrollContent: {
     paddingHorizontal: 16,
@@ -106,24 +132,23 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: '#ffffff',
-    borderRadius: 16,
+    borderRadius: 8,
     marginBottom: 20,
     borderWidth: 1,
     borderColor: '#F0F0F0',
     overflow: 'hidden',
   },
-  cardHeaderImage: {
+  cardHeaderBar: {
     width: '100%',
-    height: 60,
-    resizeMode: 'cover',
+    height: 24,
   },
   cardContent: {
     padding: 16,
-    gap: 12,
   },
   infoRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: 12,
   },
   label: {
     fontFamily: 'Geist_400Regular',
